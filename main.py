@@ -30,5 +30,8 @@ def run():
             again() # 다시 시작 함수 실행
         if len(dollimpan) == 0: # dollimpan 리스트에 값이 없을 때 실행
             print("돌림판에 아무것도 없습니다.")
-            
-def again()
+
+def again():
+    # 여기서부터 다시시작 함수
+def option():
+    # 여기서부터 옵션 함수
