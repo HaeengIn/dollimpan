@@ -35,3 +35,5 @@ def again():
     # 여기서부터 다시시작 함수
 def option():
     # 여기서부터 옵션 함수
+
+main()
