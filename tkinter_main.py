@@ -1,7 +1,8 @@
 from tkinter import *
 
+count = 0
+
 root = Tk()
-root.mainloop()
 root.title('Dol Lim Pan')
 root.geometry('800x600')
 root.resizable(False, False)
@@ -24,3 +25,5 @@ button_plus.pack()
 
 button_minus = Button(root, width=10, text='Minus', overrelief='solid', command=countminus)
 button_minus.pack()
+
+root.mainloop()
