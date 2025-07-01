@@ -8,6 +8,7 @@ root.geometry('800x600')
 root.resizable(False, False)
 
 input_list = []
+placeholder = '여기에 입력하세요. (최대 4자)'
 
 # 객체 클래스 정의
 class Item:
@@ -24,7 +25,7 @@ class Item:
 # 리스트에 입력값 추가
 def add_input():
     value = entry.get()
-    if value != '여기에 입력하세요' and value != '':
+    if value != placeholder and value != '':
         input_list.append(value)
         entry.delete(0, tkinter.END) # 입력창 비우기
         render_objects()
@@ -38,29 +39,34 @@ def render_objects():
 
 # 포커스 들어올 때
 def on_focus_in(event):
-    if entry.get() == '여기에 입력하세요':
+    if entry.get() == placeholder:
         entry.delete(0, tkinter.END)
         entry.config(fg='black')
 
 # 포커스 나갈 때
 def on_focus_out(event):
     if entry.get() == '':
-        entry.insert(0, '여기에 입력하세요')
+        entry.insert(0, placeholder)
         entry.config(fg='gray')
 
 # 입력값 길이 제한
 def validate_length(new_value):
-    if new_value == '여기에 입력하세요':
+    if new_value == placeholder:
         return True
     return len(new_value) <= 4
 
+# esc 누르면 포커스 취소
+def on_escape(event):
+    root.focus_set()
+
 vcmd = (root.register(validate_length), '%P')
 
-entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd)
-entry.insert(0, '여기에 입력하세요')
+entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10))
+entry.insert(0, placeholder)
 entry.pack()
 entry.bind("<FocusIn>", on_focus_in)
 entry.bind("<FocusOut>", on_focus_out)
+entry.bind("<Escape>", on_escape)
 
 button = tkinter.Button(root, text='추가', command=add_input)
 button.pack()
