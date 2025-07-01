@@ -13,15 +13,21 @@ input_list = []
 class Item:
     def __init__(self, master, value, index):
         self.value = value
-        self.label = tkinter.Label(master, text=f'{index} : {value}')
-        self.label.pack()
+        self.button = tkinter.Button(master, text=value, command=lambda: self.delete(index))
+        self.button.pack()
+
+
+    def delete(self, index):
+        del input_list[index]
+        render_objects()
 
 # 리스트에 입력값 추가
 def add_input():
     value = entry.get()
-    input_list.append(value)
-    entry.delete(0, tkinter.END) # 입력창 비우기
-    render_objects()
+    if value != '여기에 입력하세요' and value != '':
+        input_list.append(value)
+        entry.delete(0, tkinter.END) # 입력창 비우기
+        render_objects()
 
 # 리스트 객체 렌더링
 def render_objects():
