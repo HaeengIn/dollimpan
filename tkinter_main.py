@@ -16,20 +16,37 @@ class Item:
         self.label = tkinter.Label(master, text=f'{index} : {value}')
         self.label.pack()
 
+# 리스트에 입력값 추가
 def add_input():
     value = entry.get()
     input_list.append(value)
-    entry.delete(0, tkinter.END)
+    entry.delete(0, tkinter.END) # 입력창 비우기
     render_objects()
 
+# 리스트 객체 렌더링
 def render_objects():
     for widget in frame.winfo_children():
         widget.destroy()
     for i, val in enumerate(input_list):
         Item(frame, val, i)
 
-entry = tkinter.Entry(root)
+# 포커스 들어올 때
+def on_focus_in(event):
+    if entry.get() == '여기에 입력하세요':
+        entry.delete(0, tkinter.END)
+        entry.config(fg='black')
+
+# 포커스 나갈 때
+def on_focus_out(event):
+    if entry.get() == '':
+        entry.insert(0, '여기에 입력하세요')
+        entry.config(fg='gray')
+
+entry = tkinter.Entry(root, fg='gray')
+entry.insert(0, '여기에 입력하세요')
 entry.pack()
+entry.bind("<FocusIn>", on_focus_in)
+entry.bind("<FocusOut>", on_focus_out)
 
 button = tkinter.Button(root, text='추가', command=add_input)
 button.pack()
