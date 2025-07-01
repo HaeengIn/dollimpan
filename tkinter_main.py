@@ -44,6 +44,8 @@ def on_focus_out(event):
 
 # 입력값 길이 제한
 def validate_length(new_value):
+    if new_value == '여기에 입력하세요':
+        return True
     return len(new_value) <= 4
 
 vcmd = (root.register(validate_length), '%P')
