@@ -42,7 +42,13 @@ def on_focus_out(event):
         entry.insert(0, '여기에 입력하세요')
         entry.config(fg='gray')
 
-entry = tkinter.Entry(root, fg='gray')
+# 입력값 길이 제한
+def validate_length(new_value):
+    return len(new_value) <= 4
+
+vcmd = (root.register(validate_length), '%P')
+
+entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd)
 entry.insert(0, '여기에 입력하세요')
 entry.pack()
 entry.bind("<FocusIn>", on_focus_in)
