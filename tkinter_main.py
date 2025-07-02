@@ -1,5 +1,6 @@
-# tkinter 임포트
+# 모듈 임포트
 import tkinter
+import random
 
 # tkinter 초기 설정
 root = tkinter.Tk()
@@ -15,8 +16,7 @@ class Item:
     def __init__(self, master, value, index):
         self.value = value
         self.button = tkinter.Button(master, text=value, command=lambda: self.delete(index))
-        self.button.pack(pady=(20, 20))
-
+        self.button.pack(pady=(20))
 
     def delete(self, index):
         del input_list[index]
@@ -58,12 +58,25 @@ def validate_length(new_value):
 # esc 누르면 포커스 취소
 def on_escape(event):
     root.focus_set()
+    
+# 추첨
+def draw_random():
+    for widget in result_frame.winfo_children():
+        widget.destroy()
+
+    if input_list:
+        winner = random.choice(input_list)
+        winner_btn = tkinter.Button(result_frame, text=f'{winner}')
+        winner_btn.pack(pady=(20))
+    else:
+        empty_list = tkinter.Label(result_frame, text='리스트가 비어있습니다.', fg='red')
+        empty_list.pack(pady=(20))
 
 vcmd = (root.register(validate_length), '%P')
 
 entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10))
 entry.insert(0, placeholder)
-entry.pack(pady=(50, 50))
+entry.pack(pady=(50))
 entry.bind("<FocusIn>", on_focus_in)
 entry.bind("<FocusOut>", on_focus_out)
 entry.bind("<Escape>", on_escape)
@@ -72,7 +85,13 @@ button = tkinter.Button(root, text='추가', command=add_input)
 button.pack()
 
 frame = tkinter.Frame(root)
-frame.pack(fill='both', expand=True)
+frame.pack()
+
+draw_button = tkinter.Button(root, text='추첨', command=draw_random)
+draw_button.pack(pady=(20))
+
+result_frame = tkinter.Frame(root)
+result_frame.pack()
 
 # 종료할 때까지 계속 실행
 root.mainloop()
