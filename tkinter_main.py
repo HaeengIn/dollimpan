@@ -15,7 +15,7 @@ class Item:
     def __init__(self, master, value, index):
         self.value = value
         self.button = tkinter.Button(master, text=value, command=lambda: self.delete(index))
-        self.button.pack()
+        self.button.pack(pady=(20, 20))
 
 
     def delete(self, index):
@@ -63,7 +63,7 @@ vcmd = (root.register(validate_length), '%P')
 
 entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10))
 entry.insert(0, placeholder)
-entry.pack()
+entry.pack(pady=(50, 50))
 entry.bind("<FocusIn>", on_focus_in)
 entry.bind("<FocusOut>", on_focus_out)
 entry.bind("<Escape>", on_escape)
