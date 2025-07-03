@@ -80,6 +80,7 @@ entry.pack(pady=(50))
 entry.bind("<FocusIn>", on_focus_in)
 entry.bind("<FocusOut>", on_focus_out)
 entry.bind("<Escape>", on_escape)
+entry.bind("<Return>", lambda event: add_input())
 
 button = tkinter.Button(root, text='추가', command=add_input)
 button.pack()
