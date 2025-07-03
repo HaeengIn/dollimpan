@@ -1,6 +1,7 @@
 # 모듈 임포트
 import tkinter
 import random
+import webbrowser
 
 # tkinter 초기 설정
 root = tkinter.Tk()
@@ -76,6 +77,10 @@ def draw_random():
         empty_list = tkinter.Label(result_frame, text='리스트가 비어있습니다.', fg='red')
         empty_list.pack(pady=(10))
 
+# 도움말 열기
+def open_help():
+    webbrowser.open_new_tab("https://haeengin.kro.kr/dollimpan_help")
+
 vcmd = (root.register(validate_length), '%P')
 
 entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10))
@@ -98,6 +103,9 @@ draw_button.pack(pady=(10))
 
 result_frame = tkinter.Frame(root)
 result_frame.pack()
+
+help_button = tkinter.Button(root, text='도움말', command=open_help)
+help_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)  # 오른쪽 위에 여백 주기
 
 # 종료할 때까지 계속 실행
 root.mainloop()
