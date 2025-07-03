@@ -58,6 +58,10 @@ def validate_length(new_value):
 # esc 누르면 포커스 취소
 def on_escape(event):
     root.focus_set()
+
+# / 누르면 자동 포커스
+def focus_entry(event):
+    entry.focus_set()
     
 # 추첨
 def draw_random():
@@ -81,6 +85,7 @@ entry.bind("<FocusIn>", on_focus_in)
 entry.bind("<FocusOut>", on_focus_out)
 entry.bind("<Escape>", on_escape)
 entry.bind("<Return>", lambda event: add_input())
+root.bind("/", focus_entry)
 
 button = tkinter.Button(root, text='추가', command=add_input)
 button.pack()
