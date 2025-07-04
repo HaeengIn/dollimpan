@@ -81,31 +81,32 @@ def draw_random():
 def open_help():
     webbrowser.open_new_tab("https://haeengin.kro.kr/dollimpan_help")
 
+# 입력값 길이 제한
 vcmd = (root.register(validate_length), '%P')
 
-entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10))
-entry.insert(0, placeholder)
-entry.pack(pady=(30))
-entry.bind("<FocusIn>", on_focus_in)
-entry.bind("<FocusOut>", on_focus_out)
-entry.bind("<Escape>", on_escape)
-entry.bind("<Return>", lambda event: add_input())
-root.bind("/", focus_entry)
+entry = tkinter.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10)) # 입력창 생성
+entry.insert(0, placeholder) # 플레이스홀더 설정
+entry.pack(pady=(30)) 
+entry.bind("<FocusIn>", on_focus_in) # 포커스 들어올 때
+entry.bind("<FocusOut>", on_focus_out) # 포커스 나갈 때
+entry.bind("<Escape>", on_escape) # esc 누르면 포커스 취소
+entry.bind("<Return>", lambda event: add_input()) # 엔터키로 입력값 추가
+root.bind("/", focus_entry) # / 누르면 자동 포커스
 
-button = tkinter.Button(root, text='추가', command=add_input)
+button = tkinter.Button(root, text='추가', command=add_input) # 입력값 추가 버튼
 button.pack()
 
-frame = tkinter.Frame(root)
+frame = tkinter.Frame(root) # 입력값 리스트를 담을 프레임
 frame.pack()
 
-draw_button = tkinter.Button(root, text='추첨', command=draw_random)
+draw_button = tkinter.Button(root, text='추첨', command=draw_random) # 추첨 버튼
 draw_button.pack(pady=(10))
 
-result_frame = tkinter.Frame(root)
+result_frame = tkinter.Frame(root) # 추첨 결과를 담을 프레임
 result_frame.pack()
 
-help_button = tkinter.Button(root, text='도움말', command=open_help)
-help_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)  # 오른쪽 위에 여백 주기
+help_button = tkinter.Button(root, text='도움말', command=open_help) # 도움말 버튼
+help_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)  # 우측 상단 정렬
 
 # 종료할 때까지 계속 실행
 root.mainloop()
