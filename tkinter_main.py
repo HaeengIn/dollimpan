@@ -35,8 +35,12 @@ def add_input():
 def render_objects():
     for widget in frame.winfo_children():
         widget.destroy()
-    for i, val in enumerate(input_list):
-        Item(frame, val, i)
+    if input_list:
+        frame.pack_configure(pady=(10))  # 리스트가 있을 때만 여백
+        for i, val in enumerate(input_list):
+            Item(frame, val, i)
+    else:
+        frame.pack_configure(pady=(0))   # 리스트가 없으면 여백 없음
 
 # 포커스 들어올 때
 def on_focus_in(event):
@@ -63,7 +67,7 @@ def on_escape(event):
 # / 누르면 자동 포커스
 def focus_entry(event):
     entry.focus_set()
-    
+
 # 추첨
 def draw_random():
     for widget in result_frame.winfo_children():
@@ -76,6 +80,22 @@ def draw_random():
     else:
         empty_list = tkinter.Label(result_frame, text='리스트가 비어있습니다.', fg='red')
         empty_list.pack(pady=(10))
+
+    reset_btn = tkinter.Button(result_frame, text='재설정', command=reset_all)
+    reset_btn.pack(pady=(10))
+
+    
+# 전체 초기화
+def reset_all():
+    global input_list
+    input_list.clear()
+    entry.delete(0, tkinter.END)
+    entry.insert(0, placeholder)
+    entry.config(fg='gray')
+    for widget in frame.winfo_children():
+        widget.destroy()
+    for widget in result_frame.winfo_children():
+        widget.destroy()
 
 # 도움말 열기
 def open_help():
@@ -97,10 +117,10 @@ button = tkinter.Button(root, text='추가', command=add_input) # 입력값 추�
 button.pack()
 
 frame = tkinter.Frame(root) # 입력값 리스트를 담을 프레임
-frame.pack()
+frame.pack(pady=(0))
 
 draw_button = tkinter.Button(root, text='추첨', command=draw_random) # 추첨 버튼
-draw_button.pack(pady=(10))
+draw_button.pack(pady=(5))
 
 result_frame = tkinter.Frame(root) # 추첨 결과를 담을 프레임
 result_frame.pack()
