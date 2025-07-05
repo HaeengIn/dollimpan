@@ -9,6 +9,7 @@ root.title('Dol Lim Pan')
 root.geometry('800x600')
 root.resizable(False, False)
 
+# 변수 설정
 input_list = []
 placeholder = '여기에 입력하세요. (최대 4자)'
 
@@ -35,6 +36,7 @@ def add_input():
 def render_objects():
     for widget in frame.winfo_children():
         widget.destroy()
+
     if input_list:
         frame.pack_configure(pady=(10))  # 리스트가 있을 때만 여백
         for i, val in enumerate(input_list):
@@ -99,33 +101,41 @@ def reset_all():
 
 # 도움말 열기
 def open_help():
-    web.open_new_tab("https://haeengin.kro.kr/dollimpan_help")
+    web.open_new_tab("https://haeengin.kro.kr/help/dollimpan")
 
 # 입력값 길이 제한
 vcmd = (root.register(validate_length), '%P')
 
-entry = tk.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10)) # 입력창 생성
+# 입력창 생성
+entry = tk.Entry(root, fg='gray', validate='key', validatecommand=vcmd, width=25, font=('맑은 고딕', 10)) 
 entry.insert(0, placeholder) # 플레이스홀더 설정
-entry.pack(pady=(30)) 
+entry.pack(pady=(30))
+
+# 키 바인딩
 entry.bind("<FocusIn>", on_focus_in) # 포커스 들어올 때
 entry.bind("<FocusOut>", on_focus_out) # 포커스 나갈 때
 entry.bind("<Escape>", on_escape) # esc 누르면 포커스 취소
 entry.bind("<Return>", lambda event: add_input()) # 엔터키로 입력값 추가
 root.bind("/", focus_entry) # / 누르면 자동 포커스
 
-button = tk.Button(root, text='추가', command=add_input) # 입력값 추가 버튼
+# 입력값 추가 버튼
+button = tk.Button(root, text='추가', command=add_input)
 button.pack()
 
-frame = tk.Frame(root) # 입력값 리스트를 담을 프레임
+# 입력값 리스트를 담을 프레임
+frame = tk.Frame(root)
 frame.pack(pady=(0))
 
-draw_button = tk.Button(root, text='추첨', command=draw_random) # 추첨 버튼
+# 추첨 버튼
+draw_button = tk.Button(root, text='추첨', command=draw_random)
 draw_button.pack(pady=(5))
 
-result_frame = tk.Frame(root) # 추첨 결과를 담을 프레임
+# 추첨 결과를 담을 프레임
+result_frame = tk.Frame(root)
 result_frame.pack()
 
-help_button = tk.Button(root, text='도움말', command=open_help) # 도움말 버튼
+# 도움말 버튼
+help_button = tk.Button(root, text='도움말', command=open_help)
 help_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)  # 우측 상단 정렬
 
 # 종료할 때까지 계속 실행
