@@ -7,7 +7,7 @@ import os
 import requests as req
 
 # 버전 명시
-version = '1.1'
+version = '1.0.1'
 
 # 최신 버전 체크하기
 def check_update():
