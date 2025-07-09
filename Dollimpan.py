@@ -3,17 +3,10 @@ import tkinter as tk
 from tkinter import messagebox
 import random as ran
 import webbrowser as web
-import os
-import requests as req
-import sys
-import subprocess
-
-# 버전 명시
-version = '1.0.1'
 
 # tkinter 초기 설정
 root = tk.Tk()
-root.title('Dol Lim Pan')
+root.title('돌림판 v1.1')
 root.geometry('800x600')
 root.resizable(False, False)
 

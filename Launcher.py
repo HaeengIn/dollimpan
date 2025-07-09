@@ -10,8 +10,8 @@ root.geometry('800x600')
 root.resizable(False, False)
 
 # 버전 설정
-launcher_version = '1.0.0'
-dollimpan_version = '1.0.1'
+launcher_version = '1.0'
+dollimpan_version = '1.1'
 
 # 돌림판 실행
 def run_dollimpan():
