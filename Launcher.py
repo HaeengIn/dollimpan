@@ -2,6 +2,7 @@
 import tkinter as tk
 import requests as req
 import os
+from tkinter import messagebox
 
 # tkinter 초기 설정
 root = tk.Tk()
@@ -19,9 +20,9 @@ def run_dollimpan():
         if os.path.exists('Dollimpan.exe'):
             os.startfile('Dollimpan.exe')
         else:
-            tk.messagebox.showerror('오류', '돌림판 실행 파일이 존재하지 않습니다.')
+            messagebox.showerror('오류', '돌림판 실행 파일이 존재하지 않습니다.')
     except Exception as e:
-        tk.messagebox.showerror('오류', f'돌림판 실행 중 오류가 발생했습니다: {e}')
+        messagebox.showerror('오류', f'돌림판 실행 중 오류가 발생했습니다: {e}')
 
 # 런처 업데이트
 def launcher_update():
@@ -33,13 +34,13 @@ def launcher_update():
         data = response.json()
         latest_version = data['tag_name'].lstrip('v')
         if latest_version == launcher_version:
-            tk.messagebox.showinfo('업데이트', '이미 최신 버전입니다.')
+            messagebox.showinfo('업데이트', '이미 최신 버전입니다.')
             return
         if latest_version != launcher_version:
             # 업데이트 파일 다운로드
             asset = next((a for a in data['assets'] if a['name'] == 'Launcher.exe'), None)
             if not asset:
-                tk.messagebox.showerror('업데이트', '업데이트 파일을 찾을 수 없습니다.')
+                messagebox.showerror('업데이트', '업데이트 파일을 찾을 수 없습니다.')
                 return
             
             launcher_new = f'Launcher-{latest_version}.exe'
@@ -48,10 +49,10 @@ def launcher_update():
                 with open(launcher_new, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         f.write(chunk)
-            tk.messagebox.showinfo('업데이트', f'최신 버전 {latest_version}을 다운로드했습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
+            messagebox.showinfo('업데이트', f'최신 버전 {latest_version}을 다운로드했습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
             root.quit()
     except Exception as e:
-        tk.messagebox.showerror('업데이트 오류', f'업데이트 중 오류가 발생했습니다: {e}')
+        messagebox.showerror('업데이트 오류', f'업데이트 중 오류가 발생했습니다: {e}')
 
 # 돌림판 업데이트
 def dollimpan_update():
@@ -62,12 +63,12 @@ def dollimpan_update():
         data = response.json()
         latest_version = data['tag_name'].lstrip('v')
         if latest_version == dollimpan_version:
-            tk.messagebox.showinfo('업데이트', '이미 최신 버전입니다.')
+            messagebox.showinfo('업데이트', '이미 최신 버전입니다.')
             return
         if latest_version != dollimpan_version:
             asset = next((a for a in data['assets'] if a['name'] == 'Dollimpan.exe'), None)
             if not asset:
-                tk.messagebox.showerror('업데이트', '업데이트 파일을 찾을 수 없습니다.')
+                messagebox.showerror('업데이트', '업데이트 파일을 찾을 수 없습니다.')
                 return
             
             dollimpan_new = 'Dollimpan_new.exe'
@@ -82,12 +83,12 @@ def dollimpan_update():
                 if os.path.exists('Dollimpan.exe'):
                     os.remove('Dollimpan.exe')
                 os.rename('Dollimpan_new.exe', 'Dollimpan.exe')
-                tk.messagebox.showinfo('업데이트', f'최신 버전 {latest_version}으로 교체되었습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
+                messagebox.showinfo('업데이트', f'최신 버전 {latest_version}으로 교체되었습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
             except Exception as file_err:
-                tk.messagebox.showerror('업데이트 오류', f'파일 교체 중 오류가 발생했습니다: {file_err}')
+                messagebox.showerror('업데이트 오류', f'파일 교체 중 오류가 발생했습니다: {file_err}')
             root.quit()
     except Exception as e:
-        tk.messagebox.showerror('업데이트 오류', f'업데이트 중 오류가 발생했습니다: {e}')
+        messagebox.showerror('업데이트 오류', f'업데이트 중 오류가 발생했습니다: {e}')
 
 # 버튼 생성
 launcher_version_label = tk.Label(root, text=f'런처 버전: {launcher_version}', font=('Arial', 16))
