@@ -6,9 +6,14 @@ import webbrowser as web
 import os
 import requests as req
 import sys
+import subprocess
 
 # 버전 명시
 version = '1.0.1'
+
+# 돌림판 실행하기
+def run_dollimpan():
+    subprocess.Popen(['Dollimpan.exe'])
 
 # 최신 버전 체크하기
 def check_update():
