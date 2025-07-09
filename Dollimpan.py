@@ -11,44 +11,6 @@ import subprocess
 # 버전 명시
 version = '1.0.1'
 
-# 돌림판 실행하기
-def run_dollimpan():
-    subprocess.Popen(['Dollimpan.exe'])
-
-# 최신 버전 체크하기
-def check_update():
-    try:
-        api_url = 'https://api.github.com/repos/haeengin/dollimpan/releases/latest'
-        response = req.get(api_url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        latest_version = data['tag_name'].lstrip('v')
-        asset = next((a for a in data['assets'] if a['name'] == 'Dollimpan.exe'), None)
-        if not asset:
-            messagebox.showerror('업데이트', '업데이트 파일을 찾을 수 없습니다.')
-            return
-        if latest_version == version:
-            messagebox.showinfo('업데이트', '이미 최신 버전입니다.')
-            return
-        
-        # 실행 중인 exe가 있는 폴더에 저장
-        if getattr(sys, 'frozen', False):
-            base_path = os.path.dirname(sys.executable)
-        else:
-            base_path = os.path.dirname(__file__)
-        save_path = os.path.join(base_path, 'Dollimpan_new.exe')
-
-        with req.get(asset['browser_download_url'], stream=True) as r:
-            r.raise_for_status()
-            with open(save_path, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
-        messagebox.showinfo('업데이트', f'최신 버전 {latest_version}을 다운로드했습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
-        root.quit()
-    except Exception as e:
-        messagebox.showerror('업데이트 오류', f'업데이트 중 오류가 발생했습니다: {e}')
-
-
 # tkinter 초기 설정
 root = tk.Tk()
 root.title('Dol Lim Pan')
@@ -183,10 +145,6 @@ result_frame.pack()
 # 도움말 버튼
 help_button = tk.Button(root, text='도움말', command=open_help)
 help_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)  # 우측 상단 정렬
-
-# 업데이트 버튼
-update_button = tk.Button(root, text='업데이트', command=check_update)
-update_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=50)  # 우측 상단 정렬
 
 # 종료할 때까지 계속 실행
 root.mainloop()
