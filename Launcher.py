@@ -13,6 +13,16 @@ root.resizable(False, False)
 launcher_version = '1.0.0'
 dollimpan_version = '1.0.1'
 
+# 돌림판 실행
+def run_dollimpan():
+    try:
+        if os.path.exists('Dollimpan.exe'):
+            os.startfile('Dollimpan.exe')
+        else:
+            tk.messagebox.showerror('오류', '돌림판 실행 파일이 존재하지 않습니다.')
+    except Exception as e:
+        tk.messagebox.showerror('오류', f'돌림판 실행 중 오류가 발생했습니다: {e}')
+
 # 런처 업데이트
 def launcher_update():
     try:
@@ -88,6 +98,8 @@ dollimpan_version_label = tk.Label(root, text=f'돌림판 버전: {dollimpan_ver
 dollimpan_version_label.pack(pady=10)
 dollimpan_update_button = tk.Button(root, text='돌림판 업데이트', command=dollimpan_update)
 dollimpan_update_button.pack(pady=10)
+run_button = tk.Button(root, text='돌림판 실행', command=run_dollimpan)
+run_button.pack(pady=10)
 
 # 프로그램 시작
 root.mainloop()
