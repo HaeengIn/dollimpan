@@ -3,6 +3,7 @@ import tkinter as tk
 import requests as req
 import os
 from tkinter import messagebox
+import win32api as win32
 
 # tkinter 초기 설정
 root = tk.Tk()
@@ -23,12 +24,27 @@ def run_dollimpan():
 # 돌림판 버전 읽기
 def get_installed_dollimpan_version():
     try:
-        with open('Dollimpan.version', 'r') as f:
-            return f.read().strip()
+        info = win32.GetFileVersionInfo('Dollimpan.exe', '\\')
+        ms = info['FileVersionMS']
+        ls = info['FileVersionLS']
+        version = f"{win32.HIWORD(ms)}.{win32.LOWORD(ms)}.{win32.HIWORD(ls)}.{win32.LOWORD(ls)}"
+        return version
+    except Exception:
+        return '0.0'
+    
+# 런처 버전 읽기
+def get_installed_launcher_version():
+    try:
+        info = win32.GetFileVersionInfo('Launcher.exe', '\\')
+        ms = info['FileVersionMS']
+        ls = info['FileVersionLS']
+        version = f"{win32.HIWORD(ms)}.{win32.LOWORD(ms)}.{win32.HIWORD(ls)}.{win32.LOWORD(ls)}"
+        return version
     except Exception:
         return '0.0'
 
 dollimpan_version = get_installed_dollimpan_version()
+launcher_version = get_installed_launcher_version()
 
 # 런처 업데이트
 def launcher_update():
