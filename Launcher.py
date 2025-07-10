@@ -10,10 +10,6 @@ root.title('돌림판 런처')
 root.geometry('800x600')
 root.resizable(False, False)
 
-# 버전 설정
-launcher_version = '1.0'
-dollimpan_version = '1.1'
-
 # 돌림판 실행
 def run_dollimpan():
     try:
@@ -23,6 +19,16 @@ def run_dollimpan():
             messagebox.showerror('오류', '돌림판 실행 파일이 존재하지 않습니다.')
     except Exception as e:
         messagebox.showerror('오류', f'돌림판 실행 중 오류가 발생했습니다: {e}')
+
+# 돌림판 버전 읽기
+def get_installed_dollimpan_version():
+    try:
+        with open('Dollimpan.version', 'r') as f:
+            return f.read().strip()
+    except Exception:
+        return '0.0'
+
+dollimpan_version = get_installed_dollimpan_version()
 
 # 런처 업데이트
 def launcher_update():
@@ -83,6 +89,8 @@ def dollimpan_update():
                 if os.path.exists('Dollimpan.exe'):
                     os.remove('Dollimpan.exe')
                 os.rename('Dollimpan_new.exe', 'Dollimpan.exe')
+                with open('Dollimpan.version', 'w') as f:
+                    f.write(latest_version)
                 messagebox.showinfo('업데이트', f'최신 버전 {latest_version}으로 교체되었습니다. 프로그램을 종료하고 새 버전을 실행하세요.')
             except Exception as file_err:
                 messagebox.showerror('업데이트 오류', f'파일 교체 중 오류가 발생했습니다: {file_err}')
